@@ -1,0 +1,25 @@
+.DS_Store
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Local credentials and environment settings
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# Licensed/raw source data and derived artifacts
+data/raw/**
+data/processed/**
+artifacts/**
+
+# Keep directory guidance/placeholders
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!artifacts/.gitkeep

@@ -1,0 +1,11 @@
+# Direct dependencies verified on Python 3.12.13, macOS arm64, 2026-09-02.
+# Optional reproducibility constraints: pip install -e '.[dev,ui]' -c requirements-verified.txt
+# Not a full transitive lockfile; cross-platform bitwise model replay is not guaranteed.
+numpy==2.3.5
+pandas==2.2.3
+scipy==1.18.1
+scikit-learn==1.9.0
+streamlit==1.63.0
+altair==6.2.2
+pytest==9.1.1
+ruff==0.16.4
