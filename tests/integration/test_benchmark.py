@@ -103,7 +103,7 @@ def test_bundle_refuses_overwrite(bundle, synthetic_transactions):
 
 def test_dashboard_cannot_import_evaluator_or_experiment():
     root = Path(__file__).parents[2]
-    paths = [root / "apps/dashboard.py", root / "src/blindspot/dashboard_data.py"]
+    paths = [*sorted((root / "apps").glob("*.py")), root / "src/blindspot/dashboard_data.py"]
     for path in paths:
         for node in ast.walk(ast.parse(path.read_text())):
             if isinstance(node, ast.ImportFrom):
@@ -130,7 +130,16 @@ def test_dashboard_all_screens_controls_and_empty_sample(bundle, monkeypatch):
     app.sidebar.toggle[0].set_value(True).run()
     assert not app.exception
     assert app.warning
-    app.sidebar.radio[0].set_value("Verification Queue").run()
+    assert app.sidebar.radio[0].options == [
+        "1. Blocked payments",
+        "2. Check a sample",
+        "3. Can we trust the result?",
+    ]
+    assert [toggle.label for toggle in app.sidebar.toggle] == [
+        "Show review results",
+        "Show experiment answer key",
+    ]
+    app.sidebar.radio[0].set_value("2. Check a sample").run()
     assert not app.exception
     assert app.dataframe[0].value.empty
     app.sidebar.selectbox[1].select(0.5).run()
@@ -138,7 +147,7 @@ def test_dashboard_all_screens_controls_and_empty_sample(bundle, monkeypatch):
     assert set(app.dataframe[0].value.Evidence) <= {"Fraud", "Legitimate · false decline"}
     app.text_input[0].set_value("NONEXISTENT-ID").run()
     assert app.dataframe[0].value.empty
-    app.sidebar.radio[0].set_value("Budget Lab").run()
+    app.sidebar.radio[0].set_value("3. Can we trust the result?").run()
     assert not app.exception
     assert not app.dataframe
     app.sidebar.toggle[1].set_value(True).run()

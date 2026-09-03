@@ -17,6 +17,8 @@ dependencies = [
 [project.scripts]
 blindspot-demo = "blindspot.demo:main"
 blindspot-benchmark = "blindspot.benchmark:main"
+blindspot-reliability = "blindspot.reliability:main"
+blindspot-audit = "blindspot.audit:main"
 
 [project.optional-dependencies]
 dev = [

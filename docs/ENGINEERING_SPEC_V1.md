@@ -496,3 +496,15 @@ The frozen thesis, estimand and randomized policies are unchanged.
 6. **Architecture additions.** `evaluation/sweep.py` runs the offline paired comparison; `benchmark.py` registers and exports a non-overwriting bundle; `dashboard_data.py` verifies four allowlisted dashboard JSON files; `apps/dashboard.py` renders them. Core selection, oracle evaluation and UI remain separate. No service, database or API key is added.
 
 The measured limitations are in `docs/SYNTHETIC_BENCHMARK_2026-09-02.md`. This amendment does not establish IEEE-CIS or production performance. Build-gate dates above remain the original internal plan; they are not current verification of an official submission deadline.
+
+## 19. Evidence reliability extension · 2026-09-03
+
+Shikhar requested a materially stronger submission. The bounded extension adds an auditable local evidence-import workflow and a secondary robustness demonstration, without changing the frozen primary model, threshold, selection policies, estimand or HT/normal-interval results.
+
+- `evaluation/evidence.py` validates complete committed review batches and computes conservative partial-identification bounds under explicit population-level label-error assumptions. Pending cases cannot be dropped.
+- `audit.py` prepares a label-free committed plan and ingests review CSVs without an oracle; receipts are non-overwriting. This is not an authenticated production connector.
+- `reliability.py` pre-registers eight simulated evidence mechanisms, all five primary budgets, both policies and 200 consecutive draw seeds. It is post-benchmark sensitivity analysis, not fresh held-out validation.
+- `apps/reliability_view.py` renders aggregate stress cases within Budget Lab. Sample and offline-oracle reveal gates remain separate; the original three screens are retained. This explicitly simulated snapshot sequence does not change the original core's single-batch evidence contract.
+- UI allowlisting now includes the two additional reliability exports, bound to the exact parent run. No sealed CSV is loaded by the UI.
+
+The mathematical assumptions, Bernstein bound derivation, registered scenarios and acceptance tests are in [EVIDENCE_RELIABILITY_CONTRACT.md](EVIDENCE_RELIABILITY_CONTRACT.md). Results and replay evidence are in [RELIABILITY_RESULTS_2026-09-03.md](RELIABILITY_RESULTS_2026-09-03.md). Wide intervals and abstention are limitations to disclose, not reasons to tune against the answer key.

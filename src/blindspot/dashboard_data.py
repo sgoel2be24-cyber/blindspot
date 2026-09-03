@@ -8,7 +8,16 @@ from pathlib import Path
 
 from blindspot.contracts import IntegrityError
 
-ALLOWED_FILES = frozenset({"manifest.json", "public.json", "benchmark.json", "observations.json"})
+ALLOWED_FILES = frozenset(
+    {
+        "manifest.json",
+        "public.json",
+        "benchmark.json",
+        "observations.json",
+        "reliability.json",
+        "reliability_benchmark.json",
+    }
+)
 
 
 def read_artifact(directory: str | Path, filename: str) -> dict:
@@ -25,3 +34,18 @@ def read_artifact(directory: str | Path, filename: str) -> dict:
     if not isinstance(parsed, dict):
         raise IntegrityError("expected an object artifact")
     return parsed
+
+
+def read_reliability(directory: str | Path, source_directory: str | Path) -> dict:
+    """Bind aggregate sensitivity evidence to the exact original source manifest."""
+
+    artifact = read_artifact(directory, "reliability.json")
+    source = read_artifact(source_directory, "manifest.json")
+    digest = hashlib.sha256((Path(source_directory) / "manifest.json").read_bytes()).hexdigest()
+    design = artifact["design"]
+    if (
+        design["source_run_id"] != source["run_id"]
+        or design["source_hashes"]["manifest.json"] != digest
+    ):
+        raise IntegrityError("reliability evidence belongs to a different source run")
+    return artifact

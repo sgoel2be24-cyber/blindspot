@@ -8,6 +8,7 @@ These instructions apply to the entire `blindspot/` repository.
 - Build a false-positive verifier, not a fraud-decision or rescue product.
 - Do not add RiskTwin, a rescue scorer, policy generation, autonomous actions, an agent framework, RAG, a vector database, or an LLM dependency.
 - Prefer the smallest deterministic implementation that satisfies `docs/ENGINEERING_SPEC_V1.md`.
+- Use simple language in the app, pitch and user explanations: problem, review, result, uncertainty and next human step. Keep technical details in expandable sections or linked documents. Never simplify away material assumptions, simulation labels or limitations. See `docs/PLAIN_LANGUAGE_GUIDE.md`.
 
 ## Statistical boundary
 
@@ -19,6 +20,7 @@ These instructions apply to the entire `blindspot/` repository.
 - Discovery recall is offline-only because its denominator requires sealed oracle truth.
 - Dashboard code must not import the evaluator/experiment or read sealed files. Use allowlisted, hash-checked exports and a separate explicit gate for offline benchmark aggregates.
 - Keep every registered seed, including empty/unstable draws. Report fallback intervals alongside coverage; never equate full-range coverage with useful precision.
+- Keep the secondary reliability experiment separate from the frozen primary benchmark. Evidence batches retain every committed ID, including pending cases. Label-error allowances concern the whole declined population and require external justification; never infer them from the sealed oracle in a real audit. Bounds are pointwise under fixed potential evidence, not anytime-valid or a live production guarantee.
 
 ## Data and reproducibility
 

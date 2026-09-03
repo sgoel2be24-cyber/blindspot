@@ -1,6 +1,6 @@
 # Data provenance
 
-Status: source path defined; raw IEEE-CIS data is not bundled.
+Status: full local IEEE-CIS run verified on 2026-09-03; raw data is never bundled.
 
 ## Source
 
@@ -63,3 +63,22 @@ The implemented `blindspot-benchmark` command accepts the local IEEE-CIS directo
 The current dashboard bundle `artifacts/synthetic-2026-09-02/` contains 50,000 generated transactions (generator seed 1729), a 35,000/7,500/7,500 temporal split, and 353 evaluation declines. Its run identifier is `11a911eb5d6b31ad`. These figures describe the synthetic fixture only. The source configuration is preserved in the manifest; the complete measured comparison is documented in `docs/SYNTHETIC_BENCHMARK_2026-09-02.md`.
 
 `observations.json` contains only outcomes for the pre-registered displayed verification samples. `public.json` contains their queues and estimated aggregates; `benchmark.json` contains explicitly offline oracle aggregates. The selection package never reads any of these outcome-bearing exports. All are gitignored and should not be uploaded as raw or row-level competition evidence.
+
+## Verified IEEE-CIS acquisition and run · 2026-09-03
+
+The user supplied `train_transaction.csv.zip` from their Kaggle download after the CLI returned HTTP 403. Archive integrity passed; its only member is `train_transaction.csv` (683,351,067 uncompressed bytes). The archive remains in Downloads; a non-overwriting extraction placed the CSV in the ignored local raw directory. No access controls were bypassed and no credentials or signed download links were stored.
+
+- ZIP SHA-256: `d426943b810094085d572023df5e7d52e57d67f6e40d087bd88a3ebeae0b6c4a`.
+- CSV SHA-256: `3a5c83ab6b3cc13dcabe5ffa9f522307fd5f7f7b6e6f6a60c32284ca6283d642`.
+- Full input: 590,540 rows, 394 columns; no duplicate IDs or missing required fields. Identity file not used; no prefix restriction in the full run.
+- Full run: `e48d50631fc2ac97`, `artifacts/ieee-full-2026-09-03`; 413,378 train, 88,581 calibration, 88,581 evaluation rows; strict time separation.
+- The source hash, all seven export hashes and all 3,200 registered draws were checked. Independent oracle and summary recalculations passed in `docs/IEEE_CIS_VALIDATION.ipynb`.
+- Detailed measured findings and limitations: [IEEE-CIS benchmark report](docs/IEEE_CIS_BENCHMARK_2026-09-03.md).
+
+The earlier no-data status above is historical. Dataset access does not imply redistribution permission; keep raw, selected and sealed row-level competition artifacts local. Public demo packaging and competition-license suitability still require care; no public publication occurred in this run.
+
+## Secondary evidence simulation · 2026-09-03
+
+Reliability run `1fbc8fe54f2bad87` derives fixed potential evidence from the existing sealed decline population solely inside the trusted offline simulator. Missingness, delay and label flips are constructed scenarios, not observed analyst behavior, chargeback timing or measured IEEE-CIS label error. All 16,000 registered trials are retained, and an independent full replay matches all five exports byte for byte. The seven original benchmark exports are unchanged.
+
+The separate local audit interface accepts user-supplied review CSVs without reading sealed outcomes. Its real-data smoke run ingested an entirely pending template; no real analyst verification is claimed. Evidence batches, local receipts and generated stress bundles remain ignored. The dashboard's reliability files contain aggregates only; offline truth remains behind its separate presentation reveal.
